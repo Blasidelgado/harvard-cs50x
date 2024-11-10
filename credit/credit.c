@@ -1,6 +1,8 @@
 #include <cs50.h>
+#include <limits.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int checksum1(long int card);
 int checksum2(long int card);
@@ -8,16 +10,28 @@ string validation(int num1, int num2, long int card);
 
 int main(void)
 {
+    long int card_number = INT_MIN;
+    string user_input;
+    char *endptr;
+
     // Prompt user to input credit card number
-    long int card_number;
     do
     {
-        card_number = get_long("Enter your credit card number: ");
-    }
-    while (!card_number);
+        user_input = get_string("Enter your credit card number: ");
 
-    // Print card number
-    printf("Number: %li\n", card_number);
+        // Print the valid card number
+        printf("Number: %s\n", user_input);
+
+        // Convert the input to a long integer
+        card_number = strtol(user_input, &endptr, 10);
+
+        // Check if the conversion failed (endptr points to the same location)
+        if (*endptr != '\0')
+        {
+            card_number = INT_MIN; // Reset to ensure loop continues
+        }
+    }
+    while (card_number == INT_MIN);
 
     // Do all validations and store result
     string card_type = validation(checksum1(card_number), checksum2(card_number), card_number);
