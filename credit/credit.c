@@ -1,4 +1,5 @@
 #include <cs50.h>
+#include <ctype.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,26 +10,32 @@ string validation(int num1, int num2, long int card);
 
 int main(void)
 {
-    // Prompt user to input credit card number
-    long int card_number;
-    char input[121];
+    long int card_number = INT_MIN;
+    char user_input[121];
+    char *endptr;
+
+    // Prompt user to user_input credit card number
     do
     {
         printf("Enter your credit card number: ");
-        fgets(input, sizeof(input), stdin);
+        fgets(user_input, sizeof(user_input), stdin);
 
         // Print card number
-        printf("Number: %s", input);
+        printf("Number: %s", user_input);
 
-        char *endptr;
-        card_number = strtol(input, &endptr, 10);
+        card_number = strtol(user_input, &endptr, 10);
 
-        if (*endptr != '\0' && *endptr != '\n') 
+        while (*endptr != '\0' && isspace((unsigned char)*endptr))
         {
-            printf("Invalid input.\n");
+            endptr++;
+        }
+
+        if (*endptr != '\0') 
+        {
+            card_number = INT_MIN;
         }
     }
-    while (!card_number);
+    while (card_number == INT_MIN);
 
 
     // Do all validations and store result
