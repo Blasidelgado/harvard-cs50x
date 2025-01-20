@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    strcpy(cipher_key, argv[1]);
+
     cipher_len = strlen(cipher_key);
 
     if (invalid_length(cipher_len))
@@ -40,8 +42,6 @@ int main(int argc, char *argv[])
         printf("Key must not contain repeated characters.\n");
         return 1;
     }
-
-    strcpy(cipher_key, argv[1]);
 
     char plaintext[MAX_LENGTH];
 
