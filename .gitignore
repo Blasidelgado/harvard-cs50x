@@ -1,0 +1,11 @@
+# Exclude all files by default
+*
+
+# Allow directories to be traversed
+!*/
+
+# Allow .c files recursively
+!**/*.c
+
+# Allow this .gitignore file itself
+!.gitignore
